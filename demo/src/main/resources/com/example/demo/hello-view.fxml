@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.demo.Controlador.HelloController"
+      style="-fx-background-color: #f4f4f4;">
+
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+
+    <VBox fx:id="pantallaInicio" alignment="CENTER" spacing="15">
+        <Label text="TRIVIA API" textFill="#2c3e50">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnComenzar" text="Comenzar Trivia" onAction="#onComenzarClick"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;"/>
+        <Label fx:id="lblError" text="" textFill="#e74c3c" visible="false" wrapText="true">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+    </VBox>
+
+    <VBox fx:id="contenedorJuego" visible="false" managed="false" alignment="CENTER" spacing="20">
+        <Label fx:id="txtPregunta" text="Cargando pregunta..." wrapText="true" textAlignment="CENTER">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+
+        <GridPane vgap="10" hgap="10" alignment="CENTER">
+            <Button fx:id="btnOp1" onAction="#onRespuestaClick" minWidth="250" style="-fx-font-size: 14px;"/>
+            <Button fx:id="btnOp2" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="1" style="-fx-font-size: 14px;"/>
+            <Button fx:id="btnOp3" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="2" style="-fx-font-size: 14px;"/>
+            <Button fx:id="btnOp4" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="3" style="-fx-font-size: 14px;"/>
+        </GridPane>
+
+        <Label fx:id="txtPuntaje" text="Puntos: 0">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+    </VBox>
+</VBox>
