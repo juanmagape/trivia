@@ -4,48 +4,129 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.demo.Controlador.HelloController"
-      style="-fx-background-color: #f4f4f4;">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.demo.Controlador.HelloController"
+           styleClass="main-container"
+           stylesheets="@styles.css">
 
-    <padding>
-        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
-    </padding>
+    <VBox alignment="CENTER" spacing="0">
+        <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
+        </padding>
 
-    <VBox fx:id="pantallaInicio" alignment="CENTER" spacing="15">
-        <Label text="TRIVIA API" textFill="#2c3e50">
-            <font>
-                <Font name="System Bold" size="32.0" />
-            </font>
-        </Label>
-        <Button fx:id="btnComenzar" text="Comenzar Trivia" onAction="#onComenzarClick"
-                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;"/>
-        <Label fx:id="lblError" text="" textFill="#e74c3c" visible="false" wrapText="true">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
+        <!-- PANTALLA DE INICIO -->
+        <VBox fx:id="pantallaInicio" alignment="CENTER" spacing="0" maxWidth="450">
+            <VBox styleClass="card" alignment="CENTER" spacing="25">
+                
+                <!-- Logo/Icon -->
+                <Label text="?" styleClass="title-emoji">
+                    <font>
+                        <Font size="60.0"/>
+                    </font>
+                </Label>
+                
+                <!-- Title -->
+                <VBox alignment="CENTER" spacing="8">
+                    <Label text="TRIVIA" styleClass="title-main">
+                        <font>
+                            <Font name="System Bold" size="42.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Pon a prueba tus conocimientos" styleClass="subtitle">
+                        <font>
+                            <Font size="16.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+
+                <!-- Features -->
+                <VBox spacing="12" alignment="CENTER">
+                    <HBox spacing="8" alignment="CENTER">
+                        <Label text="10 preguntas" styleClass="badge-category"/>
+                        <Label text="Multiples categorias" styleClass="badge-category"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Start Button -->
+                <Button fx:id="btnComenzar" text="Comenzar Juego" onAction="#onComenzarClick"
+                        styleClass="btn-primary" prefWidth="250"/>
+
+                <!-- Error Label -->
+                <Label fx:id="lblError" text="" styleClass="error-label" visible="false" 
+                       wrapText="true" maxWidth="350">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </VBox>
+        </VBox>
+
+        <!-- CONTENEDOR DEL JUEGO -->
+        <VBox fx:id="contenedorJuego" visible="false" managed="false" alignment="CENTER" 
+              spacing="20" maxWidth="600">
+            
+            <VBox styleClass="card-game" alignment="CENTER" spacing="20">
+                
+                <!-- Header: Categoria + Dificultad + Puntuacion -->
+                <HBox alignment="CENTER" spacing="15">
+                    <HBox spacing="8" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <Label fx:id="lblCategoria" text="Categoria" styleClass="badge-category"/>
+                        <Label fx:id="lblDificultad" text="Facil" styleClass="badge-easy"/>
+                    </HBox>
+                    
+                    <VBox styleClass="score-container" alignment="CENTER" spacing="2">
+                        <Label text="PUNTOS" styleClass="score-label"/>
+                        <Label fx:id="lblPuntosValor" text="0" styleClass="score-value"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Progress Bar -->
+                <VBox spacing="8" alignment="CENTER">
+                    <HBox alignment="CENTER">
+                        <Label fx:id="txtProgreso" text="Pregunta 1 de 10" styleClass="progress-text"/>
+                    </HBox>
+                    <ProgressBar fx:id="barraProgreso" progress="0.1" prefWidth="500" styleClass="progress-bar"/>
+                </VBox>
+
+                <!-- Separator -->
+                <Region styleClass="separator" prefWidth="500"/>
+
+                <!-- Question -->
+                <VBox alignment="CENTER" spacing="10" VBox.vgrow="ALWAYS">
+                    <Label fx:id="txtPregunta" text="Cargando pregunta..." 
+                           styleClass="question-text" wrapText="true" 
+                           textAlignment="CENTER" maxWidth="500">
+                        <padding>
+                            <Insets top="10" bottom="10"/>
+                        </padding>
+                    </Label>
+                </VBox>
+
+                <!-- Answer Options -->
+                <VBox spacing="12" alignment="CENTER" maxWidth="500">
+                    <Button fx:id="btnOp1" onAction="#onRespuestaClick" 
+                            styleClass="btn-answer" prefWidth="500" wrapText="true"/>
+                    <Button fx:id="btnOp2" onAction="#onRespuestaClick" 
+                            styleClass="btn-answer" prefWidth="500" wrapText="true"/>
+                    <Button fx:id="btnOp3" onAction="#onRespuestaClick" 
+                            styleClass="btn-answer" prefWidth="500" wrapText="true"/>
+                    <Button fx:id="btnOp4" onAction="#onRespuestaClick" 
+                            styleClass="btn-answer" prefWidth="500" wrapText="true"/>
+                </VBox>
+
+                <!-- Footer Score Display (hidden by default, shown at end) -->
+                <Label fx:id="txtPuntaje" text="" visible="false" managed="false">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </VBox>
+            
+            <!-- Play Again Button (shown at end) -->
+            <Button fx:id="btnReiniciar" text="Jugar de Nuevo" onAction="#onReiniciarClick"
+                    styleClass="btn-primary" visible="false" managed="false"/>
+        </VBox>
     </VBox>
-
-    <VBox fx:id="contenedorJuego" visible="false" managed="false" alignment="CENTER" spacing="20">
-        <Label fx:id="txtPregunta" text="Cargando pregunta..." wrapText="true" textAlignment="CENTER">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-
-        <GridPane vgap="10" hgap="10" alignment="CENTER">
-            <Button fx:id="btnOp1" onAction="#onRespuestaClick" minWidth="250" style="-fx-font-size: 14px;"/>
-            <Button fx:id="btnOp2" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="1" style="-fx-font-size: 14px;"/>
-            <Button fx:id="btnOp3" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="2" style="-fx-font-size: 14px;"/>
-            <Button fx:id="btnOp4" onAction="#onRespuestaClick" minWidth="250" GridPane.rowIndex="3" style="-fx-font-size: 14px;"/>
-        </GridPane>
-
-        <Label fx:id="txtPuntaje" text="Puntos: 0">
-            <font>
-                <Font name="System Italic" size="14.0" />
-            </font>
-        </Label>
-    </VBox>
-</VBox>
+</StackPane>
