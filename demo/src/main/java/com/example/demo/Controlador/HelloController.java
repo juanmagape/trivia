@@ -1,15 +1,12 @@
 package com.example.demo.Controlador;
 
-import com.example.demo.Modelo.GestionDatos;
-import com.example.demo.Modelo.TriviaService;
+import com.example.demo.Modelo.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class HelloController {
 
@@ -18,118 +15,73 @@ public class HelloController {
     @FXML private Button btnOp1, btnOp2, btnOp3, btnOp4, btnComenzar;
 
     private GestionDatos preguntaActual;
-    private TriviaService servicio;
-    private int puntos = 0;
-    private int numPreguntasRespondidas = 0;
-    private final int MAX_PREGUNTAS = 10;
+    private TriviaService servicio = new TriviaService();
+    private int puntos = 0, numPreguntas = 0;
 
-    @FXML
-    protected void onComenzarClick() {
-        btnComenzar.setDisable(true);
-        lblError.setVisible(false);
-        btnComenzar.setText("Cargando...");
-
-        Thread hilo = new Thread(() -> {
+    @FXML protected void onComenzarClick() {
+        btnComenzar.setDisable(true); btnComenzar.setText("Cargando...");
+        new Thread(() -> {
             try {
-                servicio = new TriviaService();
-                // Cargar la primera pregunta
                 preguntaActual = servicio.obtenerPregunta();
-
-                javafx.application.Platform.runLater(() -> {
-                    pantallaInicio.setVisible(false);
-                    pantallaInicio.setManaged(false);
-                    contenedorJuego.setVisible(true);
-                    contenedorJuego.setManaged(true);
+                Platform.runLater(() -> {
+                    pantallaInicio.setVisible(false); pantallaInicio.setManaged(false);
+                    contenedorJuego.setVisible(true); contenedorJuego.setManaged(true);
                     mostrarPregunta();
                 });
-            } catch (Exception e) {
-                mostrarError("Error: " + e.getMessage());
-            }
-        });
-        hilo.setDaemon(true);
-        hilo.start();
+            } catch (Exception e) { mostrarError(e.getMessage()); }
+        }).start();
     }
 
-    private void mostrarError(String mensaje) {
-        javafx.application.Platform.runLater(() -> {
-            lblError.setText(mensaje);
-            lblError.setVisible(true);
-            btnComenzar.setDisable(false);
-            btnComenzar.setText("Comenzar Trivia");
-        });
+    private void mostrarError(String msg) {
+        Platform.runLater(() -> { lblError.setText(msg); lblError.setVisible(true); btnComenzar.setDisable(false); });
+    }
+
+    private void cambiarBotones(boolean estado) {
+        btnOp1.setDisable(estado); btnOp2.setDisable(estado);
+        btnOp3.setDisable(estado); btnOp4.setDisable(estado);
     }
 
     private void mostrarPregunta() {
-        if (numPreguntasRespondidas < MAX_PREGUNTAS && preguntaActual != null) {
+        if (numPreguntas < 10 && preguntaActual != null) {
             txtPregunta.setText(limpiarTexto(preguntaActual.getEnunciado()));
-            txtPuntaje.setText("Puntos: " + puntos + " (" + numPreguntasRespondidas + "/" + MAX_PREGUNTAS + ")");
+            txtPuntaje.setText("Puntos: " + puntos + " (" + numPreguntas + "/10)");
 
-            ArrayList<String> opciones = new ArrayList<>(preguntaActual.getRespuestasIncorrectas());
-            opciones.add(preguntaActual.getRespuestaCorrecta());
-            Collections.shuffle(opciones);
+            List<String> opc = new ArrayList<>(preguntaActual.getRespuestasIncorrectas());
+            opc.add(preguntaActual.getRespuestaCorrecta());
+            Collections.shuffle(opc);
 
-            btnOp1.setText(limpiarTexto(opciones.get(0)));
-            btnOp2.setText(limpiarTexto(opciones.get(1)));
-            btnOp3.setText(limpiarTexto(opciones.get(2)));
-            btnOp4.setText(limpiarTexto(opciones.get(3)));
-
-            btnOp1.setDisable(false);
-            btnOp2.setDisable(false);
-            btnOp3.setDisable(false);
-            btnOp4.setDisable(false);
+            btnOp1.setText(limpiarTexto(opc.get(0))); btnOp2.setText(limpiarTexto(opc.get(1)));
+            btnOp3.setText(limpiarTexto(opc.get(2))); btnOp4.setText(limpiarTexto(opc.get(3)));
+            cambiarBotones(false);
         } else {
-            txtPregunta.setText("¡Has terminado! Puntuación final: " + puntos + "/ " + (MAX_PREGUNTAS));
-            btnOp1.setDisable(true);
-            btnOp2.setDisable(true);
-            btnOp3.setDisable(true);
-            btnOp4.setDisable(true);
+            txtPregunta.setText("¡Terminado! Puntuación final: " + puntos + "/100");
+            cambiarBotones(true);
         }
     }
 
-    @FXML
-    protected void onRespuestaClick(ActionEvent event) {
+    @FXML protected void onRespuestaClick(ActionEvent e) {
         if (preguntaActual == null) return;
+        if (((Button) e.getSource()).getText().equals(limpiarTexto(preguntaActual.getRespuestaCorrecta()))) puntos += 10;
 
-        Button botonPulsado = (Button) event.getSource();
-        String respuestaJugador = botonPulsado.getText();
-        String respuestaCorrecta = limpiarTexto(preguntaActual.getRespuestaCorrecta());
+        numPreguntas++;
+        cambiarBotones(true);
+        txtPregunta.setText("Cargando siguiente pregunta...");
 
-        if (respuestaJugador.equals(respuestaCorrecta)) {
-            puntos += 10;
-            System.out.println("¡Correcto!");
-        } else {
-            System.out.println("Fallaste. Era: " + respuestaCorrecta);
-        }
-
-        numPreguntasRespondidas++;
-
-        btnOp1.setDisable(true);
-        btnOp2.setDisable(true);
-        btnOp3.setDisable(true);
-        btnOp4.setDisable(true);
-
-        Thread hilo = new Thread(() -> {
-            try {
-                if (numPreguntasRespondidas < MAX_PREGUNTAS) {
-                    preguntaActual = servicio.obtenerPregunta();
-                    javafx.application.Platform.runLater(this::mostrarPregunta);
-                } else {
-                    javafx.application.Platform.runLater(this::mostrarPregunta);
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    if (numPreguntas < 10) preguntaActual = servicio.obtenerPregunta();
+                    Platform.runLater(this::mostrarPregunta);
+                    return;
+                } catch (Exception ex) {
+                    try { Thread.sleep(1000); } catch (Exception ignored) {}
+                    if (i == 2) Platform.runLater(() -> mostrarError("Error tras 3 intentos."));
                 }
-            } catch (Exception e) {
-                javafx.application.Platform.runLater(() -> mostrarError("Error al cargar pregunta: " + e.getMessage()));
             }
-        });
-        hilo.setDaemon(true);
-        hilo.start();
+        }).start();
     }
 
-    private String limpiarTexto(String texto) {
-        if (texto == null) return "";
-        return texto.replace("&quot;", "\"")
-                .replace("&#039;", "'")
-                .replace("&amp;", "&")
-                .replace("&rsquo;", "'")
-                .replace("&deg;", "°");
+    private String limpiarTexto(String t) {
+        return t == null ? "" : t.replace("&quot;", "\"").replace("&#039;", "'").replace("&amp;", "&").replace("&rsquo;", "'").replace("&deg;", "°");
     }
 }

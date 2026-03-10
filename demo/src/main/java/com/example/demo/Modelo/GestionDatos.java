@@ -10,7 +10,6 @@ public class GestionDatos {
     public String correct_answer;
     public ArrayList<String> incorrect_answers;
 
-    // Getters adaptados para tu comodidad
     public String getTipo() { return type; }
     public String getDificultad() { return difficulty; }
     public String getCategoria() { return category; }
