@@ -1,0 +1,263 @@
+/* ===== TRIVIA APP - MODERN DESIGN ===== */
+
+/* Root Variables */
+.root {
+    -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
+    -primary-color: #6366f1;
+    -primary-hover: #4f46e5;
+    -secondary-color: #8b5cf6;
+    -success-color: #10b981;
+    -error-color: #ef4444;
+    -warning-color: #f59e0b;
+    -dark-bg: #1e1b4b;
+    -card-bg: #ffffff;
+    -text-primary: #1f2937;
+    -text-secondary: #6b7280;
+}
+
+/* Main Container */
+.main-container {
+    -fx-background-color: linear-gradient(to bottom right, #1e1b4b, #312e81, #4c1d95);
+}
+
+/* Cards */
+.card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0, 0, 8);
+    -fx-padding: 40;
+}
+
+.card-game {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0, 0, 8);
+    -fx-padding: 30;
+}
+
+/* Title Styles */
+.title-main {
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to right, #6366f1, #8b5cf6);
+}
+
+.title-emoji {
+    -fx-font-size: 48px;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Primary Button */
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6);
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 15 50;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.4), 10, 0, 0, 4);
+}
+
+.btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #4f46e5, #7c3aed);
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.6), 15, 0, 0, 6);
+}
+
+.btn-primary:disabled {
+    -fx-background-color: #9ca3af;
+    -fx-effect: none;
+}
+
+/* Answer Buttons */
+.btn-answer {
+    -fx-background-color: #f8fafc;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 15px;
+    -fx-font-weight: normal;
+    -fx-padding: 18 25;
+    -fx-background-radius: 15;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 15;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER-LEFT;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 5, 0, 0, 2);
+}
+
+.btn-answer:hover {
+    -fx-background-color: #ede9fe;
+    -fx-border-color: #8b5cf6;
+    -fx-effect: dropshadow(gaussian, rgba(139, 92, 246, 0.2), 10, 0, 0, 3);
+}
+
+.btn-answer:disabled {
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+/* Correct Answer */
+.btn-correct {
+    -fx-background-color: #d1fae5;
+    -fx-border-color: #10b981;
+    -fx-text-fill: #065f46;
+}
+
+/* Wrong Answer */
+.btn-wrong {
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #ef4444;
+    -fx-text-fill: #991b1b;
+}
+
+/* Question Text */
+.question-text {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 4;
+}
+
+/* Category Badge */
+.badge-category {
+    -fx-background-color: #ede9fe;
+    -fx-text-fill: #6366f1;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 14;
+    -fx-background-radius: 20;
+}
+
+/* Difficulty Badges */
+.badge-easy {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 12;
+    -fx-background-radius: 15;
+}
+
+.badge-medium {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 12;
+    -fx-background-radius: 15;
+}
+
+.badge-hard {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 12;
+    -fx-background-radius: 15;
+}
+
+/* Score Display */
+.score-container {
+    -fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6);
+    -fx-background-radius: 15;
+    -fx-padding: 12 25;
+}
+
+.score-label {
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-font-size: 12px;
+}
+
+.score-value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Progress Bar */
+.progress-container {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 10;
+    -fx-pref-height: 8;
+}
+
+.progress-bar {
+    -fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6);
+    -fx-background-radius: 10;
+    -fx-pref-height: 8;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 10;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6);
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+}
+
+/* Progress Text */
+.progress-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Error Label */
+.error-label {
+    -fx-text-fill: #ef4444;
+    -fx-font-size: 14px;
+    -fx-background-color: #fee2e2;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+}
+
+/* Final Score */
+.final-score-container {
+    -fx-background-color: linear-gradient(to right, #6366f1, #8b5cf6);
+    -fx-background-radius: 20;
+    -fx-padding: 30;
+}
+
+.final-score-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.final-score-value {
+    -fx-text-fill: white;
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+}
+
+/* Button Letters (A, B, C, D) */
+.option-letter {
+    -fx-background-color: #6366f1;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+    -fx-background-radius: 15;
+    -fx-alignment: center;
+}
+
+/* Loading Spinner Style */
+.loading-text {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 16px;
+}
+
+/* Separator */
+.separator {
+    -fx-background-color: #e2e8f0;
+    -fx-pref-height: 1;
+}
